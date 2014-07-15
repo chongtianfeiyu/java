@@ -19,7 +19,8 @@ import com.cy.datastructure.CircularLinkList;
 public class Joseph {
 
 	public static void main(String[] args) {
-		Joseph.aliveSite_1(5, 3, 2);
+//		Joseph.aliveSite_1(10, 3, 2);
+		Joseph.aliveSite_2(10, 3, 2);
 	}
 
 	/**
@@ -49,6 +50,47 @@ public class Joseph {
 		cll.init();
 		for (int i = 0; i < cll.getLength(); i++) {
 			System.out.println(cll.next().getElem());
+		}
+	}
+	
+	/**
+	 * 利用数组来解决约瑟夫问题
+	 * @param total
+	 * @param offset
+	 * @param aliveNum
+	 */
+	public static void aliveSite_2(int total, int offset, int aliveNum) {
+		// 创建一个圈子
+		int[] circul = new int[total];
+		// 为圈子里的每个成员编号
+		for (int i = 0; i < total; i++) {
+			circul[i] = i+1;
+		}
+		// 标记第几次报数
+		int tag = 0;
+		// 标识第几个人报数
+		int i = 0;
+		// 剩下aliveNum个人之后，游戏结束。
+		while (total > aliveNum) {
+			// 该位置的人未死
+			if(circul[i] != 0){
+				// 报数
+				tag++;
+				// 要杀死此人
+				if(tag >= 3){
+					circul[i] = 0;
+					tag = 0;
+					total--;
+				}
+			}
+			i = ++i%circul.length;
+		}
+		
+		//输出最后可以活下的位置。
+		for(int p : circul) {
+			if(p != 0) {
+				System.out.println(p);
+			}
 		}
 	}
 	
