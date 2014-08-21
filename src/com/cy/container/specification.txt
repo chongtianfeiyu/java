@@ -1,0 +1,138 @@
+0）本章内容
+	容器的概念
+	容器API
+	Collection接口
+	Iterator接口
+	增强的for循环
+	Set接口
+	List接口和Comparable接口
+	Collections类
+	Map接口
+	自动打包/解包
+	泛型（JDK1.5新增）
+	
+1）Collection接口-定义了存取一组对象的方法，其子接口Set和List分别定义了存取方式。
+	*Set中的数据对象没有顺序且不可以重复
+	*List中的数据对象有顺序且可以重复
+	
+2）Map接口定义了存储“键（key）-值（value）映射对”的方法。
+
+3)Collection接口中所定义的方法：（CollectionDemo.java）
+		int size();
+		boolean isEmpty();
+		void clear();
+		boolean contains(Object element);
+		boolean add(Object element);
+		boolean remove(Object element);
+		Iterator iterator();
+		boolean containsAll(Collection c);
+		boolean addAll(Collection c);
+		boolean removeAll(Collection c);
+		boolean retainAll(Collection c);
+		Object[] toArray();
+		
+		
+4）对象相等（CollectionDemo.java）
+	容器对象在调用remove、contains等方式时需要比较对象是否相等，这是会涉及到对象类型的equals方法和hashcode方法；
+	对于自定义的类型需要重写equals和hashcode方法以实现自定义的对象相等规则。
+	注意：相等的对象应该具有相等的hash code。
+	
+
+5）Iterator接口（IteratorDemo.java）
+	*所有实现了Collection接口的容器类都有一个iterator方法用以返回一个实现Iterator接口的对象。
+	*Iterator对象称为迭代器，用以方便的实现对容器内元素的遍历操作
+	*Iterator接口定义了如下方法
+		boolead hasNext(); 	//判断游标右边是否有元素
+		Object next(); 		//返回游标右边的元素并将游标移动到下一个位置
+		void removed();    	//删除游标左面的元素，在执行完next之后该操作只能执行一次
+	*Iterator对象的remove方法是在迭代过程中删除元素的唯一的安全方法。
+		
+6)JDK1.5增强for循环对于遍历array和Collection的时候相当简便（EnhancedFor.java）
+	*缺陷
+		数组：不能方便的访问下标
+		集合：与Iterator相比，不能方便的删除集合中的元素（在内部也是调用Iterator）
+	*总结：除了简单遍历并读取内容外，不建议使用增强for循环
+
+7)Set接口（SetDemo.java）
+	*Set接口是Collection的子接口，Set接口没有提供额外的方法，但实现Set接口的容器类中的元素是没有顺序的，而且不可以重复。
+	*Set容器可以与数学中的“集合”的概念相对应。
+	*JDK API所提供的Set容器类有HashSet，TreeSet等。
+		
+8)List接口（ListDemo.java）
+ 	*List接口是Collection的子接口，实现List接口的容器中的元素是有顺序而且可以重复的。
+ 	*List容器中的元素都对应一个整数型的序号记载其在容器中的位置，可以根据序号存取容器中的元素。
+ 	*JDK API所提供的List容器有ArrayList和LinkedList等。
+	
+9）Collections类（CollectionsDemo.java）
+	*List常用算法。
+	*类java.util.Collections提供了一些静态方法实现了基于List容器的一些常用算法。
+	*void sort(List) 对List容器的元素进行排序。
+	*void shuffle(List) 对List容器内的对象进行随机排序。
+	*void reverse(List) 对List容器内的对象进行逆序排序。
+	*void fill(List,Object) 用一个特定的对象重写整个List容器。
+	*void copy(List dest,List src) 将src List容器内的内容拷贝到dest List容器
+	*int binarySearch(List, Object) 对于顺序List容器，采用折半查找的方法查找特定对象。
+		
+10)Comparable接口（ComparableDemo.java）
+	*上面的算法根据什么确定容器中对象的“大小”顺序？
+	*所有可以“排序”的类都实现了java.lang.Comparable接口，Comparable接口中只有一个方法：
+		public int compareTo(Object obj); 该方法：
+		返回0表示this==obj
+ 		返回正数表示this>obj
+ 		返回负数表示this<obj
+ 	* 实现了Comparable接口的类通过实现CompareTo方法从而确定改类对象的排序方式
+
+11)如何选择数据结构
+	*衡量标准：读的效率和改的效率
+		*Array读快改慢
+		*Linked改快读慢
+		*Hash两者之间
+		
+12)Map接口 (MapDemo.java)
+	*实现Map接口的类用来存储键-值对。
+	*Map接口的实现类有HashMap和TreeMap等。
+	*Map类中存储的键-值对通过键来标识，所以键不能重复。
+	*方法：
+		Object put(Object key, Object value);
+		Object get(Object key);
+		Object remove(Object key);
+		boolean containsKey(Object key);
+		boolean containsValue(Object value);
+		int size();
+		boolean isEmpty();
+		void putAll(Map t);
+		void clear();
+		
+13)Auto-boxing/unboxing JDK 1.5新增(MapDemo.java)
+	在合适的时机自动打包、解包
+		*自动将基础类型转换为对象
+		*自动将对象转换为基础类型
+	
+14)JDK1.5 泛型
+	起因：JDK1.4以前类型不明确：
+		装入集合的类型都被当作Object对待，从而失去自己的实际类型。
+		从集合中取出时旺旺需要转型，效率低，容易产生错误。
+	解决办法：
+		在定义集合的同时定义集合中对象的类型。
+		事例：BasicGeneric.java
+			可以在指定Collection的时候指定
+			也可以在循环时用Iterator指定
+	好处：
+		增强程序的可读性和稳定性
+		
+15)总结：
+	1136
+	*一个图
+	*一个类
+		Collections
+	*三个知识点
+		For
+		Generic
+		Auto-boxing/unboxing
+	*六个接口
+		Collection
+		Set
+		List
+		Map
+		Iterator
+		Comparable
