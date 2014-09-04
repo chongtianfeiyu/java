@@ -5,7 +5,7 @@ package com.cy.thread;
  * @author CY
  * @version 2014年9月4日
  */
-public class Demo {
+public class ThreadDemo {
 
 	/**
 	 * @param args
